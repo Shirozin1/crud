@@ -6,19 +6,20 @@ from .serializers import FuncionarioSerializer
 
 # Create your views here.
 
-class NoteViewSet(ModelViewSet):
+
+class FuncionarioViewSet(ModelViewSet):
     serializer_class = FuncionarioSerializer
 
     def get_object(self):
-        return get_object_or_404(Funcionario, id=self.request.query_params.get("funcionario_id"))
-    
+        return get_object_or_404(Funcionario, funcionario_id=self.request.query_params.get("funcionario_id"))
+
     def get_queryset(self):
         return Funcionario.objects.filter(desligado=False).order_by('-nome')
-    
+
     def perform_destroy(self, instance):
         instance.desligado = True
         instance.save()
-    
+
 
 def index(request):
     return HttpResponse("Oieee")

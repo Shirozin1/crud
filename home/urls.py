@@ -16,9 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from crud.views import FuncionarioViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("crud.urls")),
     path('api-auth/', include('rest_framework.urls')),
+
+    path("funcionario/", FuncionarioViewSet.as_view(
+        {
+            'get': 'retrieve',
+            'post': 'create',
+            'put': 'update',
+            'patch': 'partial_update',
+            'delete': 'destroy'
+        }
+    )),
+    path("funcionario/all/", FuncionarioViewSet.as_view(
+        {
+            'get': 'list',
+        }
+    )),
 ]
